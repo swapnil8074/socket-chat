@@ -16,13 +16,18 @@ io.on("connection", socket => {
   console.log("New User connected");
 
   socket.on("createMessage", msg => {
-    console.log("createMessage", msg);
+    // broadcasting to everyone, using io
+    io.emit("newMessage", {
+      from: msg.from,
+      text: msg.text,
+      createdAt: new Date().getTime()
+    });
   });
 
-  socket.emit("newMessage", {
-    from: "swapnil",
-    text: "comming from server"
-  });
+  // socket.emit("newMessage", {
+  //   from: "swapnil",
+  //   text: "comming from server"
+  // });
 
   socket.on("disconnect", () => {
     console.log("client disconnected");
