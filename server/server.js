@@ -6,10 +6,6 @@ const port = process.env.PORT || 3000;
 
 app.use(express.static(publicPath));
 
-// app.get("/", (req, res) => {
-//   res.send("Home Page");
-// });
-
 app.listen(port, function() {
   console.log("server is running on port 3000");
 });
