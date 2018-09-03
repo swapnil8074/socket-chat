@@ -15,6 +15,15 @@ app.use(express.static(publicPath));
 io.on("connection", socket => {
   console.log("New User connected");
 
+  socket.on("createMessage", msg => {
+    console.log("createMessage", msg);
+  });
+
+  socket.emit("newMessage", {
+    from: "swapnil",
+    text: "comming from server"
+  });
+
   socket.on("disconnect", () => {
     console.log("client disconnected");
   });
