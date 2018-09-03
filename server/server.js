@@ -9,15 +9,17 @@ const publicPath = path.join(__dirname, "../public");
 const app = express();
 var server = http.createServer(app);
 var io = socketIO(server);
+const { generateMessage } = require("./utils/message");
 
 app.use(express.static(publicPath));
 
 io.on("connection", socket => {
-  console.log("New User connected");
+  // emit new user joined
+  socket.emit(generateMessage("Admin", "Welcome to the Chat app"));
+  socket.broadcast.emit("newUser", generateMessage("Admin", "New User joined"));
 
   socket.on("createMessage", msg => {
-    // broadcasting to everyone, using io
-    io.emit("newMessage", {
+    socket.broadcast.emit("newMessage", {
       from: msg.from,
       text: msg.text,
       createdAt: new Date().getTime()
